@@ -12,7 +12,7 @@ const MenuItem = ({ title, description, imageName, price }) => {
         <div className="row">
             {/*pic*/}
             <div className="col-4 image-fluid">
-                <img className='menu-option-image rounded' src={`${process.env.PUBLIC_URL}/images/${imageName}`} alt={title} />
+                <img className='menu-option-image rounded' src={`https://alanakoshi.github.io/cs378-p2/images/${imageName}`} alt={title} />
             </div>
             {/*menu description*/}
             <div className="col">
