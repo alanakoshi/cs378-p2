@@ -83,7 +83,7 @@ function App() {
   return (
     <div className='container'>
       <div className='logo'>
-        <img src={`/images/Japanese-House-logo.png`} alt='Japanese House logo' />
+        <img src={`${process.env.PUBLIC_URL}/images/Japanese-House-logo.png`} alt='Japanese House logo' />
       </div>
       <div className="row">
         <div className="cafe_desc" id="first">Experience Japanese cuisine</div>
