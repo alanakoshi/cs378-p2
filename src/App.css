@@ -5,6 +5,7 @@
 
 .container {
   text-size-adjust: 60%;
+  margin-bottom: 15px;
 }
 img {
   width: 100%;
@@ -28,11 +29,19 @@ img {
     font-size: 35px;
     margin-bottom: 20px;
 }
-.add .btn {
-  border-radius: 20px;
-  padding: 0px 15px;
+.addition-subtract .btn {
+  border-radius: 50%;
   font-size: 20px;
   box-shadow: 0 1px 2px gray;
+  height: 24px;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+}
+.addition-subtract .btn svg {
+  width: 25px;  /* Adjust width of the icon */
+  height: 25px; /* Adjust height of the icon */
 }
 .menu-title {
   font-size:25px;
@@ -51,9 +60,10 @@ img {
 .menu-option {
   margin: 20px;
 }
-.add {
-  text-align: right;
-}
 .title-desc {
   height: 85%;
+}
+.count {
+  display: flex;
+  margin-left: 10px;
 }

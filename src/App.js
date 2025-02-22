@@ -1,6 +1,6 @@
 import './App.css';
 import MenuItem from './components/MenuItem';
-
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // This imports bootstrap css styles. You can use bootstrap or your own classes by using the className attribute in your elements.
 
 // Menu data. An array of objects where each object represents a menu item. Each menu item has an id, title, description, image name, and price.
@@ -80,6 +80,39 @@ const menuItems = [
 
 
 function App() {
+  const [cart, setCart] = useState({});
+
+  const updateCart = (id, amount) => {
+    setCart(prevCart => {
+      const newCart = { ...prevCart, [id]: (prevCart[id] || 0) + amount };
+      if (newCart[id] <= 0) delete newCart[id];
+      return newCart;
+    });
+  };
+
+  const clearCart = () => setCart({});
+
+  const getTotal = () => {
+    return Object.entries(cart).reduce((total, [id, quantity]) => {
+      const item = menuItems.find(item => item.id === parseInt(id));
+      return total + (item.price * quantity);
+    }, 0).toFixed(2);
+  };
+
+  const handleOrder = () => {
+    if (Object.keys(cart).length === 0) {
+      alert('Your cart is empty!');
+      return;
+    }
+    let receipt = 'Order placed!\n\nYour order:\n';
+    Object.entries(cart).forEach(([id, quantity]) => {
+      const item = menuItems.find(item => item.id === parseInt(id));
+      receipt += `${quantity} x ${item.title} - $${(item.price * quantity).toFixed(2)}\n`;
+    });
+    receipt += `\nTotal: $${getTotal()}`;
+    alert(receipt);
+  };
+
   return (
     <div className='container'>
       <div className='logo'>
@@ -93,13 +126,26 @@ function App() {
         {/* Display menu items dynamicaly here by iterating over the provided menuItems */}
         {menuItems.map((item) => (
           <MenuItem 
-          key={item.id}
-          title={item.title} 
-          description={item.description} 
-          imageName={item.imageName}
-          price={item.price}
+            id={item.id}
+            title={item.title} 
+            description={item.description} 
+            imageName={item.imageName}
+            price={item.price}
+            count = {cart[item.id] || 0}
+            updateCart={updateCart}
           />
         ))}
+      </div>
+      <div className='row cart'>
+        <div className='col' style={{ paddingLeft: '30px' }}>
+          <h2 className='subtotal'>Subtotal: ${getTotal()}</h2>
+        </div>
+        <div className='col-2 d-flex justify-content-center cart-button'>
+          <button className='btn btn-light' onClick={handleOrder} style={{ borderRadius: '40px', padding: '0px 15px', border: '2px solid black' }}>Order</button>
+        </div>
+        <div className='col-3 d-flex justify-content-center cart-button'>
+          <button className='btn btn-light' onClick={clearCart} style={{ borderRadius: '40px', padding: '0px 15px', border: '2px solid black' }}>Clear all</button>
+        </div>
       </div>
     </div>
   );
